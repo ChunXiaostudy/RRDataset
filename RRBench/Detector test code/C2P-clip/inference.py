@@ -68,7 +68,7 @@ def parse_args():
     parser.add_argument('--loadSize'     ,  type=int  , default=224                                                            )
     parser.add_argument('--cropSize'     ,  type=int  , default=224                                                            )
     parser.add_argument('--batch_size'   ,  type=int  , default=64                                                             )
-    parser.add_argument('--dataroot'     ,  type=str  , default='/data/zhuyao/lcx/RRDataset_final'                            )
+    parser.add_argument('--dataroot'     ,  type=str  , default='/data/RRDataset_final'                            )
     parser.add_argument('--model_path'   ,  type=str  , default='https://www.now61.com/f/95OefW/C2P_CLIP_release_20240901.zip' )
     parser.add_argument('--save_path'    ,  type=str  , default='./results.csv' )
     args = parser.parse_args()
@@ -90,26 +90,26 @@ def parse_args():
 if __name__ == '__main__':
     opt = parse_args()
     
-    # 准备存储结果的列表
+    
     results = []
     
-    # 加载模型
+    
     state_dict = torch.hub.load_state_dict_from_url(opt.model_path, map_location="cpu", progress=True)
     model = C2P_CLIP(name='openai/clip-vit-large-patch14', num_classes=1)
     model.load_state_dict(state_dict, strict=True)
     model.cuda()
     model.eval()
 
-    # 遍历三个子数据集
+    
     subdatasets = ['original', 'transfer', 'redigital']
-    base_dataroot = opt.dataroot  # 保存原始的dataroot路径
+    base_dataroot = opt.dataroot  
     
     for subdataset in tqdm(subdatasets, desc="处理数据集"):
-        # 直接从base_dataroot构建新路径
+        
         dataroot = os.path.join(base_dataroot, subdataset)
         print(f"\nTesting on {subdataset} dataset:")
         
-        # 设置数据路径
+        
         opt.dataroot = dataroot
         data_loader = create_dataloader(opt)
         
@@ -121,13 +121,13 @@ if __name__ == '__main__':
                 
         y_true, y_pred = np.array(y_true), np.array(y_pred)
         
-        # 计算指标
+        
         real_acc = accuracy_score(y_true[y_true==0], y_pred[y_true==0] > 0.5)
         fake_acc = accuracy_score(y_true[y_true==1], y_pred[y_true==1] > 0.5)
         total_acc = accuracy_score(y_true, y_pred > 0.5)
         ap = average_precision_score(y_true, y_pred)
         
-        # 保存结果
+        
         results.append({
             'Dataset': subdataset,
             'Total_Accuracy': total_acc * 100,
@@ -142,7 +142,7 @@ if __name__ == '__main__':
         print(f"Fake Accuracy: {fake_acc*100:.2f}%")
         print(f"AP: {ap*100:.2f}%")
     
-    # 将结果保存到CSV
+    
     df = pd.DataFrame(results)
     df.to_csv(opt.save_path, index=False)
     print(f"\nResults saved to {opt.save_path}")

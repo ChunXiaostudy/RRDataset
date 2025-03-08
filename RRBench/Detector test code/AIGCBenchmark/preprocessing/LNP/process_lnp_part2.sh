@@ -6,8 +6,8 @@ export CUDA_VISIBLE_DEVICES=7
 WEIGHTS="./weights/preprocessing/sidd_rgb.pth"
 
 # Base directories
-INPUT_BASE="/data/lcx/RRDataset_final"
-OUTPUT_BASE="/data/lcx/LNP_IMAGE"
+INPUT_BASE="/data/RRDataset_final"
+OUTPUT_BASE="/data/LNP_IMAGE"
 
 # Folders to process
 FOLDERS=(

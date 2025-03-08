@@ -8,10 +8,10 @@
 import sys
 import os
 
-# 获取脚本所在的目录路径
+
 script_dir = os.path.dirname(os.path.abspath(__file__))
 
-# 添加项目根目录到 sys.path
+
 project_root = os.path.abspath(os.path.join(script_dir, '../../'))
 sys.path.append(project_root)
 
@@ -54,15 +54,15 @@ def get_image_paths(folder_path):
     return sorted(image_paths)
 
 def main():
-    # 获取所有图像路径
+    
     image_paths = get_image_paths(args.input_dir)
     print(f"Found {len(image_paths)} images in {args.input_dir}")
 
-    # 创建数据集和数据加载器
+    
     test_dataset = get_validation_data(image_paths, args.noise_type)
     test_loader = DataLoader(dataset=test_dataset, batch_size=1, shuffle=False, num_workers=0, drop_last=False)
 
-    # 加载模型
+    
     model_restoration = DenoiseNet()
     util.load_checkpoint(model_restoration, args.weights)
     print("===>Testing using weights: ", args.weights)
@@ -70,7 +70,7 @@ def main():
     model_restoration = nn.DataParallel(model_restoration)
     model_restoration.eval()
 
-    # 处理图像
+    
     with torch.no_grad():
         for ii, data_test in enumerate(tqdm(test_loader), 0):
             rgb_noisy = data_test[0].cuda()
@@ -87,7 +87,7 @@ def main():
                     denoised_img = img_as_ubyte(rgb_restored[batch])
                     imgsavepath = filenames[batch].replace(args.input_dir, args.result_dir)
                     
-                    # 统一保存为PNG格式
+                    
                     imgsavepath = imgsavepath.replace('jpg', 'png').replace('JPEG', 'png').replace('jpeg', 'png')
                     
                     try:

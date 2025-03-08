@@ -1,16 +1,16 @@
 MODEL="SAFE"
-RESUME_PATH="/data/zhuyao/MODEL_WEIGHT_FINTUNED/SAFE/checkpoint-best.pth"
-OUTPUT_PATH="/data/zhuyao/MODEL_WEIGHT_FINTUNED/SAFE"
+RESUME_PATH="/data/MODEL_WEIGHT_FINTUNED/SAFE/checkpoint-best.pth"
+OUTPUT_PATH="/data/MODEL_WEIGHT_FINTUNED/SAFE"
 
-# 创建输出目录
+
 mkdir -p $OUTPUT_PATH
 
-# 评估original数据集
+
 CUDA_VISIBLE_DEVICES=0 python main_finetune.py \
     --input_size 256 \
     --transform_mode 'crop' \
     --model $MODEL \
-    --eval_data_path "/data/zhuyao/lcx/RRDataset_final/original" \
+    --eval_data_path "/data/RRDataset_final/original" \
     --batch_size 32 \
     --num_workers 4 \
     --output_dir $OUTPUT_PATH \
@@ -24,7 +24,7 @@ CUDA_VISIBLE_DEVICES=0 python main_finetune.py \
     --input_size 256 \
     --transform_mode 'crop' \
     --model $MODEL \
-    --eval_data_path "/data/zhuyao/lcx/RRDataset_final/transfer" \
+    --eval_data_path "/data/RRDataset_final/transfer" \
     --batch_size 32 \
     --num_workers 4 \
     --output_dir $OUTPUT_PATH \
@@ -38,7 +38,7 @@ CUDA_VISIBLE_DEVICES=0 python main_finetune.py \
     --input_size 256 \
     --transform_mode 'crop' \
     --model $MODEL \
-    --eval_data_path "/data/zhuyao/lcx/RRDataset_final/redigital" \
+    --eval_data_path "/data/RRDataset_final/redigital" \
     --batch_size 32 \
     --num_workers 4 \
     --output_dir $OUTPUT_PATH \
@@ -47,7 +47,7 @@ CUDA_VISIBLE_DEVICES=0 python main_finetune.py \
     --dist_url "none" \
     2>&1 | tee $OUTPUT_PATH/log_eval_redigital.txt
 
-# 合并结果到CSV
+
 python - <<EOF
 import os
 import re

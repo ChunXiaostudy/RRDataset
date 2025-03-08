@@ -1,19 +1,19 @@
 import os
 
-# 数据集根目录配置
+
 DATASET_PATHS = {
-    'CNNSpot': '/data/lcx/RRDataset_final',
-    'FreDect': '/data/lcx/RRDataset_final', 
-    'Fusing': '/data/lcx/RRDataset_final',
-    'Gram': '/data/lcx/RRDataset_final',
-    'UnivFD': '/data/lcx/RRDataset_final',
-    'LNP': '/data/lcx/LNP_IMAGE_TEST',
-    'DIRE': '/data/lcx/DIRE_IMAGE_TEST',
-    'LGrad': '/data/lcx/LGRAD_IMAGE_TEST',
-    'DNF': '/data/lcx/DNF_IMAGE_TEST'
+    'CNNSpot': '/data/RRDataset_final',
+    'FreDect': '/data/RRDataset_final', 
+    'Fusing': '/data/RRDataset_final',
+    'Gram': '/data/RRDataset_final',
+    'UnivFD': '/data/RRDataset_final',
+    'LNP': '/data/LNP_IMAGE_TEST',
+    'DIRE': '/data/DIRE_IMAGE_TEST',
+    'LGrad': '/data/LGRAD_IMAGE_TEST',
+    'DNF': '/data/DNF_IMAGE_TEST'
 }
 
-# GPU 配置
+
 GPU_MAPPING = {
     'CNNSpot': 'cuda:0',
     'FreDect': 'cuda:1',
@@ -26,22 +26,22 @@ GPU_MAPPING = {
     'DNF': 'cuda:0'
 }
 
-# 模型权重路径配置 
+
 WEIGHT_PATHS = {
     'CNNSpot': './checkpoints/CNNSpot/model_epoch_best_14.pth',
     'FreDect': './checkpoints/FreDect/fredct14.pth',
     'Fusing': './checkpoints/Fusing/fusing_14.pth',
     'Gram': './checkpoints/Gram/Gram14.pth',
-    'UnivFD': '/data/lcx/checkpoints/UnivFD/univfd_14.pth',
-    'LNP': '/data/lcx/checkpoints/LNP/CNNSpot/lnp.pth',
-    'DIRE': '/data/lcx/checkpoints/DIRE/CNNSpot/dire.pth',
-    'LGrad': '/data/lcx/checkpoints/lgrad/CNNSpot/lgard.pth',
-    'DNF': '/data/lcx/checkpoints/DNF_v14/CNNSpot/cnnspot.pth'
+    'UnivFD': './checkpoints/UnivFD/univfd_14.pth',
+    'LNP': './checkpoints/LNP/CNNSpot/lnp.pth',
+    'DIRE': './checkpoints/DIRE/CNNSpot/dire.pth',
+    'LGrad': './checkpoints/lgrad/CNNSpot/lgard.pth',
+    'DNF': './checkpoints/DNF_v14/CNNSpot/cnnspot.pth'
 }
 
-# 测试子集
+
 TEST_SUBSETS = ['original', 'transfer', 'redigital']
-# TEST_SUBSETS = ['transfer']
+
 
 def mkdir(path):
     if not os.path.exists(path):

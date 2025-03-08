@@ -196,8 +196,8 @@ def main(args):
     args.gpu = None
     args.distributed = False
     args.world_size = 1
-    num_tasks = 1  # 在评估模式下设置num_tasks为1
-    global_rank = 0  # 在评估模式下设置global_rank为0
+    num_tasks = 1  
+    global_rank = 0  
     
     device = torch.device(args.device)
 
@@ -333,7 +333,7 @@ def main(args):
             data_loader_val, 
             model, 
             device, 
-            use_amp=False,  # 明确设置为False
+            use_amp=False,  
             val_name=os.path.basename(args.eval_data_path)
         )
         

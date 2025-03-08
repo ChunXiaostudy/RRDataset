@@ -1,13 +1,13 @@
 MODEL="SAFE"
-OUTPUT_PATH="/data/zhuyao/MODEL_WEIGHT_FINTUNED/SAFE"
+OUTPUT_PATH="/data/MODEL_WEIGHT_FINTUNED/SAFE"
 mkdir -p $OUTPUT_PATH
 
 CUDA_VISIBLE_DEVICES=0 python main_finetune.py \
     --input_size 256 \
     --transform_mode 'crop' \
     --model $MODEL \
-    --data_path "/data/zhuyao/lcx/RRDataset_train/train" \
-    --eval_data_path "/data/zhuyao/lcx/RRDataset_train/val" \
+    --data_path "/data/RRDataset_train/train" \
+    --eval_data_path "/data/RRDataset_train/val" \
     --save_ckpt_freq 1 \
     --batch_size 32 \
     --blr 1e-3 \

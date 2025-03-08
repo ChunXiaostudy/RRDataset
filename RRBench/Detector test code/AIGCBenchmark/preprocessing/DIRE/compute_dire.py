@@ -10,10 +10,10 @@ import sys
 import cv2
 from mpi4py import MPI
 
-# 获取脚本所在的目录路径
+
 script_dir = os.path.dirname(os.path.abspath(__file__))
 
-# 添加项目根目录到 sys.path
+
 project_root = os.path.abspath(os.path.join(script_dir, '../../'))
 sys.path.append(project_root)
 

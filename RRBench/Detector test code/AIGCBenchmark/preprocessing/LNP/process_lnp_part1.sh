@@ -6,8 +6,8 @@ export CUDA_VISIBLE_DEVICES=6
 WEIGHTS="./weights/preprocessing/sidd_rgb.pth"
 
 # Base directories
-INPUT_DIR="/data/lcx/RRDataset_original_train_val"
-OUTPUT_DIR="/data/lcx/LNP_ORIGINAL_TRAIN_VAL"
+INPUT_DIR="/data/RRDataset_original_train_val"
+OUTPUT_DIR="/data/LNP_ORIGINAL_TRAIN_VAL"
 
 # Process train/ai folder
 echo "Processing train/ai folder..."

@@ -9,46 +9,46 @@ from options.test_options import TestOptions
 import numpy as np
 from tqdm import tqdm
 
-# 定义测试数据集
+
 DetectionTests = {
     'original': {
-        'dataroot': '/data/lcx/RRDataset_final/original',
+        'dataroot': '/data/RRDataset_final/original',
         'no_resize': False,
         'no_crop': True,
     },
     'transfer': {
-        'dataroot': '/data/lcx/RRDataset_final/transfer', 
+        'dataroot': '/data/RRDataset_final/transfer', 
         'no_resize': False,
         'no_crop': True,
     },
     'redigital': {
-        'dataroot': '/data/lcx/RRDataset_final/redigital',
+        'dataroot': '/data/RRDataset_final/redigital',
         'no_resize': False,
         'no_crop': True,
     }
 }
 
-# 创建结果保存目录
-result_dir = '/data/lcx/Weight_finetune/Freq/result'
+
+result_dir = '/data/Weight_finetune/Freq/result'
 os.makedirs(result_dir, exist_ok=True)
 
-# 设置日志
+
 Logger(os.path.join(result_dir, 'test_log.txt'))
 
 opt = TestOptions().parse(print_options=False)
-opt.model_path = '/data/lcx/Weight_finetune/Freq/model_epoch_last.pth'
+opt.model_path = '/data/Weight_finetune/Freq/model_epoch_last.pth'
 print(f'Model_path: {opt.model_path}')
 
-# 加载模型
+
 model = freqnet(num_classes=1)
 model.load_state_dict(torch.load(opt.model_path, map_location='cpu'), strict=True)
 model.cuda()
 model.eval()
 
-# 保存结果的列表
+
 results = []
 
-# 测试每个数据集
+
 for testSet in tqdm(DetectionTests.keys(), desc="Testing datasets"):
     dataroot = DetectionTests[testSet]['dataroot']
     printSet(testSet)
@@ -60,7 +60,7 @@ for testSet in tqdm(DetectionTests.keys(), desc="Testing datasets"):
     
     acc, ap, r_acc, f_acc, _, _ = validate(model, opt)
     
-    # 保存结果
+    
     result = {
         'dataset': testSet,
         'accuracy': acc * 100,
@@ -70,7 +70,7 @@ for testSet in tqdm(DetectionTests.keys(), desc="Testing datasets"):
     }
     results.append(result)
     
-    # 打印结果
+    
     print(f"\n{testSet} Results:")
     print(f"ACC: {acc*100:.2f}%")
     print(f"REAL_ACC: {r_acc*100:.2f}%")
@@ -78,7 +78,7 @@ for testSet in tqdm(DetectionTests.keys(), desc="Testing datasets"):
     print(f"AP: {ap*100:.2f}%")
     print("-"*50)
 
-# 保存所有结果到文件
+
 with open(os.path.join(result_dir, 'test_results.txt'), 'w') as f:
     f.write("Test Results Summary\n")
     f.write("="*50 + "\n\n")

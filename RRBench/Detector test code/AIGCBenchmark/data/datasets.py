@@ -31,11 +31,11 @@ def dataset_folder(opt, root):
 
 def binary_dataset(opt, root):
     if opt.isTrain:
-        crop_func = transforms.RandomCrop(opt.cropSize) # 随机剪裁，默认224
+        crop_func = transforms.RandomCrop(opt.cropSize) 
     elif opt.no_crop:
-        crop_func = transforms.Lambda(lambda img: img) # 不处理
+        crop_func = transforms.Lambda(lambda img: img) 
     else:
-        crop_func = transforms.CenterCrop(opt.cropSize) # 中心裁剪
+        crop_func = transforms.CenterCrop(opt.cropSize) 
 
     if opt.isTrain and not opt.no_flip:
         flip_func = transforms.RandomHorizontalFlip()
@@ -189,35 +189,9 @@ class read_data_new():
             input_img, cropped_img, scale = processing_PSM(img,self.opt)
             return input_img, cropped_img, target, scale, imgname
         else:
-            # 所有其他方法都使用相同的处理方式
             img = processing(img, self.opt, 'imagenet')
         
         return img, target
 
     def __len__(self):
         return len(self.labels)
-
-# class Option:
-#     def __init__(self):
-#         self.dataroot = "/data/lcx/GenImage/stable_diffusion_v_1_4/imagenet_ai_0419_sdv4/train"  # 根据您的实际路径进行修改
-#         self.isTrain = True  # 根据需要选择是训练集还是验证集
-#         self.detect_method = 'CNNSpot'
-#         self.CropSize = 224
-#         self.no_flip = False
-#         self.rz_interp = 'bilinear'
-#         self.loadSize = 256
-#         self.blur_prob = 0
-#         self.jpg_prob = 0
-    
-# if __name__ == "__main__":
-#     import torch
-#     from torch.utils.data import DataLoader
-#     opt = Option()
-#     dataset = read_data_new(opt)
-#     dataloader = DataLoader(dataset, batch_size=64, shuffle=True)
-
-#     for i, (images, labels) in enumerate(dataloader):
-#         print("Batch", i + 1)
-#         for img, label in zip(images, labels):
-#             print(f"Image path: {img}, Label: {label}")
-#         break

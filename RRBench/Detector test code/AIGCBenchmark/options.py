@@ -29,10 +29,8 @@ class TrainOptions():
 
         # parser.add_argument('--is_single',action='store_true',help='evaluate image by image')
         parser.add_argument('--detect_method', type=str,default='CNNSpot', help='choose the detection method')
-        # parser.add_argument('--dataroot', default='/hotdata/share/AIGCDetect', help='path to images (should have subfolders trainA, trainB, valA, valB, etc)')
-        # parser.add_argument('--dataroot', default='/data/lcx/GenImage/stable_diffusion_v_1_4/imagenet_ai_0419_sdv4', help='path to images (should have subfolders trainA, trainB, valA, valB, etc)')
-        # parser.add_argument('--dataroot', default='/data/lcx/GenImage_subset', help='path to images (should have subfolders trainA, trainB, valA, valB, etc)')
-        parser.add_argument('--dataroot', default='/data/lcx/DNF_IMAGE_PROGAN', help='path to images (should have subfolders trainA, trainB, valA, valB, etc)')
+        
+        parser.add_argument('--dataroot', default='/data/DNF_IMAGE_PROGAN', help='path to images (should have subfolders trainA, trainB, valA, valB, etc)')
         parser.add_argument('--classes', default='airplane,bird,bicycle,boat,bottle,bus,car,cat,cow,chair,diningtable,dog,person,pottedplant,motorbike,tvmonitor,train,sheep,sofa,horse', help='image classes to train on')
         parser.add_argument('--mode', default='binary')
         parser.add_argument('--fix_backbone', action='store_true',help='useful in UnivFD, if set, fix the backbone and only update fc layer')  
@@ -55,8 +53,7 @@ class TrainOptions():
         parser.add_argument('--lr', type=float, default=0.0001, help='initial learning rate for adam')
         parser.add_argument('--init_type', type=str, default='normal', help='network initialization [normal|xavier|kaiming|orthogonal]')
         parser.add_argument('--init_gain', type=float, default=0.02, help='scaling factor for normal, xavier and orthogonal.')
-        # parser.add_argument('--checkpoints_dir', type=str, default='/data/lcx/checkpoints', help='models are saved here')
-        parser.add_argument('--checkpoints_dir', type=str, default='/data/lcx/checkpoints/DNF_PROGAN', help='models are saved here')
+        parser.add_argument('--checkpoints_dir', type=str, default='/data/checkpoints/DNF_PROGAN', help='models are saved here')
         parser.add_argument('--weight_decay', type=float, default=0.0, help='loss weight for l2 reg')
         
         return parser
@@ -158,8 +155,7 @@ class TestOptions():
         parser.add_argument('--LNP_modelpath',type=str,default='./weights/preprocessing/sidd_rgb.pth',help='the path of LNP pre-trained model')
         parser.add_argument('--DIRE_modelpath',type=str,default='./weights/preprocessing/lsun_bedroom.pt',help='the path of DIRE pre-trained model')
         parser.add_argument('--LGrad_modelpath', type=str,default='./weights/preprocessing/karras2019stylegan-bedrooms-256x256_discriminator.pth', help='the path of LGrad pre-trained model')
-        # parser.add_argument('--dataroot', type=str, default='/home/zhuyao123/lcx/RRDataset/test_image/original_image', 
-        #                     help='path to datasets. Default: /home/zhuyao123/lcx/RRDataset/test_image/original_image')
+
         self.initialized = True
 
         return parser

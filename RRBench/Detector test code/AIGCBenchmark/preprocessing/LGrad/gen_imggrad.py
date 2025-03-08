@@ -9,7 +9,7 @@ import os
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
 
-# 添加项目根目录到 sys.path
+
 project_root = os.path.abspath(os.path.join(script_dir, '../../'))
 sys.path.append(project_root)
 
@@ -57,14 +57,14 @@ def read_batchimg(imgpath_list, noise_type):
         height,weight=img.height, img.width
 
 
-        #这里是新加入的对图像的预处理
+       
         if noise_type == 'jpg':
             # print('jpg')
             # quit()
             img_processed = pil_jpg_eval(img,95)
         elif noise_type == 'resize':
             # print('resize')
-            img_processed = torchvision.transforms.Resize((int(height/2),int(weight/2)))(img) #可以改成缩放多少倍，因为图像质量各不相同
+            img_processed = torchvision.transforms.Resize((int(height/2),int(weight/2)))(img) 
 
 
         elif noise_type == 'blur':
@@ -75,13 +75,7 @@ def read_batchimg(imgpath_list, noise_type):
         else:
             # print('none')
             img_processed = img
-        # 对图像进行处理的代码
-        # 注意通道数，在pytorch中，第一列是batchsize，第二列是通道数，第三列之后是图像
         
-        # img = Image.open(filepath).convert('RGB')
-        # img = pil_jpg_eval(img,95)
-        # img_processed = np.array(img_processed).astype(np.float32)
-        # img_processed = img_processed/255.
         img_list.append(torch.unsqueeze(processimg(img_processed),0))
         # img_list.append( torch.unsqueeze(processimg(PIL.Image.open(imgpath).convert('RGB')),0)  )
     return torch.cat(img_list,0)
@@ -108,7 +102,7 @@ def generate_images():
     print(f'Transform {imgdir} to {outdir}')
     os.makedirs(outdir, exist_ok=True)
 
-    # 将下载的预训练stylegan的分类器进行转换，变成pytorch版本
+   
     model = build_model(gan_type='stylegan',
         module='discriminator',
         resolution=256,

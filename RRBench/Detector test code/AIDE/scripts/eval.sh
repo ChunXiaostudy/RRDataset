@@ -20,6 +20,6 @@ python main_finetune.py \
     --eval True \
     --device cuda:0 \
     --resume ./weights/weight/sd14_train_aide.pth \
-    --eval_data_path /data/lcx/RRDataset_final \
-    --output_dir /data/lcx/Weight_finetune/AIDE/unfinetune_result/sd14 \
+    --eval_data_path /data/RRDataset_final \
+    --output_dir /data/Weight_finetune/AIDE/unfinetune_result/sd14 \
     ${PY_ARGS} 

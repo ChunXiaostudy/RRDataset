@@ -17,21 +17,21 @@ class OptimizedInContextClassifier:
         self.example_images = {}
         
     def optimize_image(self, image_path, max_size=800):
-        """优化图片大小"""
+        
         with Image.open(image_path) as img:
-            # 保持宽高比缩放
+            
             if max(img.size) > max_size:
                 ratio = max_size / max(img.size)
                 new_size = tuple(int(dim * ratio) for dim in img.size)
                 img = img.resize(new_size, Image.Resampling.LANCZOS)
             
-            # 转换为JPEG格式并压缩
+           
             buffer = io.BytesIO()
             img.convert('RGB').save(buffer, format='JPEG', quality=85, optimize=True)
             return buffer.getvalue()
     
     def encode_image(self, image_path, optimize=True):
-        """将图片转换为base64编码，可选择是否优化"""
+        
         if optimize:
             image_data = self.optimize_image(image_path)
             return base64.b64encode(image_data).decode('utf-8')
@@ -40,7 +40,7 @@ class OptimizedInContextClassifier:
                 return base64.b64encode(image_file.read()).decode('utf-8')
 
     def load_example_images(self, base_path):
-        """加载并优化示例图片"""
+        
         example_paths = {
             'transfer_real': os.path.join(base_path, "transfer_real_images", "transfer_real_000001.png"),
             'transfer_fake': os.path.join(base_path, "test", "transfer_ai_images", "transfer_Medical_&_Public_Health_000837.png"),
@@ -52,10 +52,10 @@ class OptimizedInContextClassifier:
             if os.path.exists(path):
                 self.example_images[key] = self.encode_image(path, optimize=True)
             else:
-                print(f"警告：示例图片不存在: {path}")
+                print(f"error: {path}")
 
     def get_base_messages(self):
-        """获取基础消息结构"""
+        
         base_messages = [
             {
                 "role": "system",
@@ -63,7 +63,7 @@ class OptimizedInContextClassifier:
             }
         ]
         
-        # 添加示例图片
+        
         if self.example_images:
             example_contents = []
             examples_text = {
@@ -88,10 +88,10 @@ class OptimizedInContextClassifier:
         return base_messages
 
     def classify_image(self, image_path):
-        """分类单张图片"""
+        
         base64_image = self.encode_image(image_path, optimize=True)
         
-        # 使用原始详细的prompt
+        
         prompt = """Act as a forensic image analyst specializing in origin classification. Analyze images through their intrinsic visual patterns while disregarding transmission/redigitization artifacts. Focus on fundamental generation traces rather than secondary distortions.
 
 Contextual Examples:
@@ -136,22 +136,21 @@ Output JSON: { "classification": "AI-generated/Real" }"""
             
             response_content = response.choices[0].message.content
             try:
-                # 清理和解析响应
+                
                 clean_content = response_content.replace('```json', '').replace('```', '').strip()
                 json_response = json.loads(clean_content)
                 classification = json_response.get('classification', '').lower()
                 return 'real' if 'real' in classification else 'fake'
             except json.JSONDecodeError as e:
-                print(f"JSON解析错误: {e}")
-                print(f"问题内容: {response_content}")
+                print(f"JSON error: {e}")
+                print(f"eror: {response_content}")
                 return None
                 
         except Exception as e:
-            print(f"分类错误: {str(e)}")
+            print(f"error: {str(e)}")
             return None
 
 def evaluate_model(classifier, test_folder):
-    """评估模型性能"""
     results = {
         'original': {'predictions': [], 'true_labels': []},
         'transfer': {'predictions': [], 'true_labels': []},
@@ -159,29 +158,28 @@ def evaluate_model(classifier, test_folder):
     }
     
     for condition in results.keys():
-        print(f"\n处理 {condition} 条件的图片...")
-        
-        # 处理真实图片
+        print(f"\nprocess {condition} ...")
+ 
         real_folder = os.path.join(test_folder, f"{condition}_real_images")
         if os.path.exists(real_folder):
-            for img in tqdm(os.listdir(real_folder), desc=f"{condition} 真实图片"):
+            for img in tqdm(os.listdir(real_folder), desc=f"{condition} real"):
                 if img.lower().endswith(('.jpg', '.jpeg', '.png')):
                     pred = classifier.classify_image(os.path.join(real_folder, img))
                     if pred:
                         results[condition]['predictions'].append(pred)
                         results[condition]['true_labels'].append('real')
         
-        # 处理AI生成图片
+
         ai_folder = os.path.join(test_folder, f"{condition}_ai_images")
         if os.path.exists(ai_folder):
-            for img in tqdm(os.listdir(ai_folder), desc=f"{condition} AI生成图片"):
+            for img in tqdm(os.listdir(ai_folder), desc=f"{condition} AI"):
                 if img.lower().endswith(('.jpg', '.jpeg', '.png')):
                     pred = classifier.classify_image(os.path.join(ai_folder, img))
                     if pred:
                         results[condition]['predictions'].append(pred)
                         results[condition]['true_labels'].append('fake')
     
-    # 计算指标
+
     metrics = {}
     for condition in results:
         total = len(results[condition]['predictions'])
@@ -203,10 +201,10 @@ def evaluate_model(classifier, test_folder):
     return metrics, results
 
 def main():
-    # 配置参数
-    api_key = "sk-zk2d04aa9450b2c0db94490b3e53179ea5a67c3088a3dc91"
-    base_url = "https://api.zhizengzeng.com/v1"
-    base_path = r"E:\ImageNet\RRDataset\RRDataset_final"
+    
+    api_key = ""
+    base_url = ""
+    base_path = r"\RRDataset\RRDataset_final"
     test_folder = os.path.join(base_path, "test")
     
     models = [
@@ -217,24 +215,24 @@ def main():
     ]
     
     for model in models:
-        print(f"\n\n评估模型: {model}")
+        print(f"\n\neval: {model}")
         print("="*50)
         
-        # 初始化分类器
+  
         classifier = OptimizedInContextClassifier(api_key, base_url, model)
         classifier.load_example_images(base_path)
         
-        # 评估模型
+
         metrics, results = evaluate_model(classifier, test_folder)
         
-        # 打印结果
+   
         for condition, scores in metrics.items():
-            print(f"\n{condition.upper()} 条件下的结果:")
-            print(f"总体准确率 (acc): {scores['acc']:.4f}")
-            print(f"真实图片准确率 (real_acc): {scores['real_acc']:.4f}")
-            print(f"AI生成图片准确率 (fake_acc): {scores['fake_acc']:.4f}")
+            print(f"\n{condition.upper()} :")
+            print(f"(acc): {scores['acc']:.4f}")
+            print(f" (real_acc): {scores['real_acc']:.4f}")
+            print(f" (fake_acc): {scores['fake_acc']:.4f}")
         
-        # 保存结果
+
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         with open(f'results_{model}_{timestamp}.json', 'w', encoding='utf-8') as f:
             json.dump({

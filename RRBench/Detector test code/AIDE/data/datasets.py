@@ -32,7 +32,7 @@ Perturbations = K.container.ImageSequential(
 )
 
 transform_before = transforms.Compose([
-    transforms.Resize((256, 256)), # 人为添加的
+    transforms.Resize((256, 256)),
     transforms.ToTensor(),
     transforms.Lambda(lambda x: Perturbations(x)[0])
     ]
@@ -153,10 +153,10 @@ class TrainDataset(Dataset):
         
         self.data_list = []
         
-        # 遍历real和ai文件夹
+        
         for category in ['real', 'ai']:
             category_path = os.path.join(root, category)
-            # real标签为0, ai标签为1
+            
             label = 0 if category == 'real' else 1
             
             if os.path.exists(category_path):
@@ -203,15 +203,15 @@ class TrainDataset(Dataset):
 
 class TestDataset(Dataset):
     def __init__(self, is_train, args):
-        # 使用当前评估路径
+       
         root = args.current_eval_path if hasattr(args, 'current_eval_path') else args.eval_data_path
         
         self.data_list = []
         
-        # 遍历real和ai文件夹
+   
         for category in ['real', 'ai']:
             category_path = os.path.join(root, category)
-            # real标签为0, ai标签为1 
+            
             label = 0 if category == 'real' else 1
             
             if os.path.exists(category_path):
