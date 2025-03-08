@@ -16,4 +16,4 @@ num_images=$(find "${INPUT_DIR}" -type f \( -iname "*.jpg" -o -iname "*.png" -o 
 SAVE_FLAGS="--images_dir $INPUT_DIR --recons_dir $OUTPUT_DIR --dire_dir $OUTPUT_DIR"
 SAMPLE_FLAGS="--batch_size 8 --num_samples $num_images --timestep_respacing ddim20 --use_ddim True"
 
-mpiexec -n 1 python /home/zhuyao123/lcx/AIGCDetectBenchmark-main/preprocessing/DIRE/compute_dire.py --model_path $MODEL_PATH $MODEL_FLAGS $SAVE_FLAGS $SAMPLE_FLAGS --has_subfolder False --has_subclasses False 
+mpiexec -n 1 python /home/AIGCDetectBenchmark-main/preprocessing/DIRE/compute_dire.py --model_path $MODEL_PATH $MODEL_FLAGS $SAVE_FLAGS $SAMPLE_FLAGS --has_subfolder False --has_subclasses False 
