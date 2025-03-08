@@ -1,0 +1,74 @@
+{
+  "War & Conflict Scenes": [
+    "War debris",
+    "Explosion scenes",
+    "Refugees receiving food",
+    "Airstrike bombing residential buildings",
+    "Children crying in front of ruins",
+    "Adults holding dead children's bodies",
+    "Illegal arms trade",
+    "Soldiers and military equipment",
+    "Terrorists occupying an area",
+    "Execution of hostages"
+  ],
+  "Natural Disasters & Accidents": [
+    "Traffic accident (specific car brand: e.g., Tesla/Toyota)",
+    "Flood",
+    "Earthquake",
+    "Forest wildfire",
+    "Disease outbreak",
+    "Landslide",
+    "Cruise ship oil spill",
+    "Post-tornado devastation",
+    "Subway derailment",
+    "Plane crash"
+  ],
+  "Political & Social Events": [
+    "Election day clashes",
+    "Protest march",
+    "Political figures",
+    "Border wall",
+    "Slums",
+    "Interpersonal conflicts",
+    "Riot police confrontation",
+    "Political assassination",
+    "Mass demonstration",
+    "Civil unrest"
+  ],
+  "Medical & Public Health": [
+    "Organ transplantation",
+    "Virus leakage",
+    "Patient death",
+    "Medical malpractice",
+    "Drug manufacturing/R&D",
+    "Hospital overcrowding",
+    "Emergency room chaos",
+    "Infectious disease ward",
+    "Failed medical procedures",
+    "Experimental treatment complications"
+  ],
+  "Culture & Religion": [
+    "Collapse/destruction of iconic buildings",
+    "Conflicts near iconic buildings",
+    "Protests by religious groups",
+    "Religious site vandalism",
+    "Cultural heritage destruction",
+    "Sacred artifact theft",
+    "Religious persecution",
+    "Cultural clash violence",
+    "Historical site damage",
+    "Religious extremism"
+  ],
+  "Production": [
+    "Unsanitary production environments",
+    "Workshop accidents",
+    "Factory explosions",
+    "Chemical spills",
+    "Industrial fires",
+    "Workplace injuries",
+    "Machinery malfunction",
+    "Toxic waste disposal",
+    "Construction site collapse",
+    "Mining disasters"
+  ]
+}
