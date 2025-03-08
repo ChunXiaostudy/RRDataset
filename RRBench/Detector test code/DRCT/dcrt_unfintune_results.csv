@@ -1,0 +1,4 @@
+Condition,Total_Accuracy,Real_Accuracy,Fake_Accuracy
+original,0.7071,0.7342,0.6800
+transfer,0.6994,0.7314,0.6673
+redigital,0.6524,0.8074,0.4974
