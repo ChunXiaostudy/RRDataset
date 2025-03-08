@@ -19,7 +19,7 @@ CUDA_VISIBLE_DEVICES=0 python main_finetune.py \
     --dist_url "none" \
     2>&1 | tee $OUTPUT_PATH/log_eval_original.txt
 
-# 评估transfer数据集
+
 CUDA_VISIBLE_DEVICES=0 python main_finetune.py \
     --input_size 256 \
     --transform_mode 'crop' \
@@ -33,7 +33,7 @@ CUDA_VISIBLE_DEVICES=0 python main_finetune.py \
     --dist_url "none" \
     2>&1 | tee $OUTPUT_PATH/log_eval_transfer.txt
 
-# 评估redigital数据集
+
 CUDA_VISIBLE_DEVICES=0 python main_finetune.py \
     --input_size 256 \
     --transform_mode 'crop' \
